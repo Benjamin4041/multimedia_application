@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Files({ data,  getName, showDetail }) {
+function Files({ data,   showDetail,setshowDetail,id ,clickedDetail }) {
   return (
     <div
       style={{
@@ -12,8 +12,15 @@ function Files({ data,  getName, showDetail }) {
         marginRight: "1rem"
       }}
       onClick={() => {
-        showDetail(true)
-       return getName(data)
+        if(data.id==id){
+          setshowDetail(showDetail ?false:true)
+          return clickedDetail(null)
+        }
+        setshowDetail(true)
+       return clickedDetail({
+            filename: data.path,
+            filedetail: data,
+       })
       }}
     >
       <p>{data.name}</p>

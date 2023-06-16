@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <div style={styles.main} >
-        <h1 style={styles.main_h1}>SU's Drive</h1>
+        <h1 style={styles.main_h1}>KM's Drive</h1>
         <p style={styles.main_p}>A File Manager created by kesh Money</p>
     </div>
   )

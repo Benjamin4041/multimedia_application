@@ -23,4 +23,16 @@ export const data = [
     type: "image",
     path: "file-server/Screen Shot 2022-05-31 at 12.37.51 PM.png",
   },
+  {
+    id: 5,
+    name: "Image 1",
+    type: "image",
+    path: "file-server/Screen Shot 2022-09-24 at 8.35.52 PM.png",
+  },
+  {
+    id: 6,
+    name: "Image 2",
+    type: "image",
+    path: "file-server/Screen Shot 2022-09-30 at 6.19.37 PM.png",
+  },
 ];

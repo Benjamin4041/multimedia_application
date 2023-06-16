@@ -1,5 +1,5 @@
 // import './App.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Buttons from "./components/buttons";
 import Files from "./components/files";
 import Header from "./components/header";
@@ -22,7 +22,7 @@ function App() {
 
   let del = () => {
     // delete function
-    if (clickedDetail == null) {
+    if (clickedDetail === null) {
       return null;
     }
     setDataFetched(
@@ -55,6 +55,7 @@ function App() {
             href={clickedDetail === null ? null : clickedDetail.filedetail.path}
             target="_blank"
             download
+            rel="noreferrer"
           >
             <Buttons name={"Download"} />
           </a>
@@ -212,12 +213,12 @@ function App() {
             </p>
           </div>
           <Chart
-            imageNum={datafetched.filter((item) => item.type == "image").length}
+            imageNum={datafetched.filter((item) => item.type === "image").length}
             docNum={
-              datafetched.filter((item) => item.type == "document").length
+              datafetched.filter((item) => item.type === "document").length
             }
-            vidNum={datafetched.filter((item) => item.type == "video").length}
-            audioNum={datafetched.filter((item) => item.type == "audio").length}
+            vidNum={datafetched.filter((item) => item.type === "video").length}
+            audioNum={datafetched.filter((item) => item.type === "audio").length}
           />
         </div>
       </div>

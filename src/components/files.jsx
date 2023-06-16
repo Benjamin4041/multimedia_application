@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Files({ data,   showDetail,setshowDetail,id ,clickedDetail }) {
   return (
@@ -12,7 +12,7 @@ function Files({ data,   showDetail,setshowDetail,id ,clickedDetail }) {
         marginRight: "1rem"
       }}
       onClick={() => {
-        if(data.id==id){
+        if(data.id===id){
           setshowDetail(showDetail ?false:true)
           return clickedDetail(null)
         }

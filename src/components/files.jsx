@@ -1,6 +1,6 @@
 import React from "react";
 
-function Files({ data,   showDetail,setshowDetail,id ,clickedDetail }) {
+function Files({ data, showDetail,setshowDetail,id ,clickedDetail }) {
   return (
     <div
       style={{

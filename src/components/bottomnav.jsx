@@ -37,14 +37,14 @@ export default function Bottomnav({mode,showDetail}) {
         ></lord-icon>
       </span>
       {/* star */}
-      <span style={{ cursor:"pointer" }}>
+      {/* <span style={{ cursor:"pointer" }}>
         <lord-icon
           src="https://cdn.lordicon.com/mdgrhyca.json"
           trigger="click"
           colors={{primary:"#121331",secondary:"#08a88a"}}
           style={{width:"3.1rem"}}
         ></lord-icon>
-      </span>
+      </span> */}
     </div>
   );
 }

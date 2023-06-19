@@ -1,5 +1,5 @@
 // import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Buttons from "./components/buttons";
 import Files from "./components/files";
 import Header from "./components/header";
@@ -11,9 +11,10 @@ function App() {
   let [clickedDetail, setClickedDetail] = useState(null);
   let [showDetail, setShowDetail] = useState(false);
   let [showChart, setShowChart] = useState(false);
-  let [mode,setMode]=useState("normal")
+  let [mode, setMode] = useState("normal");
   // modes: normal,deleted and favorite
-  let [bin] = useState([]);
+  let [bin, setBin] = useState([]);
+
   // let [id,setId]=useState()
   let rename = () => {
     //rename
@@ -25,22 +26,81 @@ function App() {
   };
 
   let del = () => {
-    // delete function
+    if (mode === "deleted") {
+      // delete function
+      if (clickedDetail === null) {
+        return null;
+      }
+      /* The code below  is finding the index of an object in an array called `datafetched` that matches
+  certain properties of another object called `clickedDetail.filedetail`. The `findIndex` method is
+  used to iterate through the `datafetched` array and return the index of the first element that
+  satisfies the provided testing function. The testing function checks if the `id`, `name`, `type`,
+  and `path` properties of the current element in the iteration match the corresponding properties of
+  `clickedDetail.filedetail`. The index of the matching element is stored in the `index` variable */
+
+      // i used the spread operator because this datafetched.splice(datafetched.indexOf(clickedDetail.filedetail), 1)
+      // returns an array and what i need is the item inside the array
+      if (bin.indexOf(clickedDetail.filedetail) >= 0) {
+        let index = bin.indexOf(clickedDetail.filedetail);
+        bin.splice(index, 1);
+
+        setBin(bin);
+        setClickedDetail(null);
+        setShowDetail(false);
+        alert(' This File Has Been Permanently  Deleted')
+      }
+      return null;
+    } else {
+      // delete function
+      if (clickedDetail === null) {
+        return null;
+      }
+      /* The code below  is finding the index of an object in an array called `datafetched` that matches
+  certain properties of another object called `clickedDetail.filedetail`. The `findIndex` method is
+  used to iterate through the `datafetched` array and return the index of the first element that
+  satisfies the provided testing function. The testing function checks if the `id`, `name`, `type`,
+  and `path` properties of the current element in the iteration match the corresponding properties of
+  `clickedDetail.filedetail`. The index of the matching element is stored in the `index` variable */
+
+      // i used the spread operator because this datafetched.splice(datafetched.indexOf(clickedDetail.filedetail), 1)
+      // returns an array and what i need is the item inside the array
+      if (datafetched.indexOf(clickedDetail.filedetail) >= 0) {
+        let index = datafetched.indexOf(clickedDetail.filedetail);
+        let addIndexToObject = datafetched.splice(index, 1)[0];
+        addIndexToObject.index = index;
+        // bin.push(
+        //   ...datafetched.splice(datafetched.indexOf(clickedDetail.filedetail), 1)
+        // );
+        bin.push(addIndexToObject);
+
+        setDataFetched(datafetched);
+        setClickedDetail(null);
+        setShowDetail(false);
+      }
+      return null;
+    }
+  };
+
+  let restore = () => {
     if (clickedDetail === null) {
       return null;
     }
-    // i used the spread operator because this datafetched.splice(datafetched.indexOf(clickedDetail.filedetail), 1) 
-    // returns an array and what i need is the item inside the array
-    bin.push(...datafetched.splice(datafetched.indexOf(clickedDetail.filedetail), 1))
-    setDataFetched(datafetched);
+    datafetched.splice(
+      clickedDetail.filedetail.index,
+      0,
+      clickedDetail.filedetail
+    );
+    console.log(clickedDetail.filedetail.index);
+    bin.splice(bin.indexOf(clickedDetail.filedetail), 1);
+    setBin([...bin]);
+    setDataFetched([...datafetched]);
     setClickedDetail(null);
     setShowDetail(false);
-    // console.log(bin)
   };
 
   return (
-    <div style={{ position: "relative",height:"100vh",width:"100vw" }}>
-      <div style={{ backgroundColor: "#FEFDFE", height: "100vh"}}>
+    <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
+      <div style={{ backgroundColor: "#FEFDFE", height: "100vh" }}>
         <Header />
         <div style={{ padding: "0 1rem" }}>
           <h3>My File</h3>
@@ -64,10 +124,22 @@ function App() {
             <Buttons name={"Download"} />
           </a>
           <Buttons name={"Delete"} func={del} />
+
+          <div
+            style={mode === "deleted" ? { display: "" } : { display: "none" }}
+          >
+            <Buttons name={"restore"} func={restore} />
+          </div>
           {/* added  search */}
         </div>
         {/* normal file section */}
-        <div style={mode==='normal'?{ display: "flex", height: "32.4rem" }:{ display: "none", height: "32.4rem" }}>
+        <div
+          style={
+            mode === "normal"
+              ? { display: "flex", height: "32.4rem" }
+              : { display: "none", height: "32.4rem" }
+          }
+        >
           <div style={{ marginTop: "1rem", width: "100vw" }}>
             {datafetched.map((item, idx) => (
               <Files
@@ -165,9 +237,23 @@ function App() {
           </div>
         </div>
         {/* deleted files section */}
-        <div style={mode==='deleted'?{ display: "flex", height: "32.4rem" }:{ display: "none", height: "32.4rem" }}>
-          <div style={{ marginTop: "1rem", width: "100vw"}}>
-          <h1 style={{textAlign:"center",width:"fit-content",translate:"1rem 0"}}>Recycle Bin</h1>
+        <div
+          style={
+            mode === "deleted"
+              ? { display: "flex", height: "32.4rem" }
+              : { display: "none", height: "32.4rem" }
+          }
+        >
+          <div style={{ marginTop: "1rem", width: "100vw" }}>
+            <h1
+              style={{
+                textAlign: "center",
+                width: "fit-content",
+                translate: "1rem 0",
+              }}
+            >
+              Recycle Bin
+            </h1>
             {bin.map((item, idx) => (
               <Files
                 data={item}
@@ -330,7 +416,7 @@ function App() {
           />
         </div>
       </div>
-      <Bottomnav mode={setMode} showDetail={setShowDetail}/>
+      <Bottomnav mode={setMode} showDetail={setShowDetail} />
     </div>
   );
 }

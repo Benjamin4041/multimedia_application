@@ -1,6 +1,6 @@
 import React from "react";
 
-function Files({ data, showDetail,setshowDetail,id ,clickedDetail }) {
+function Files({ data, showDetail, setshowDetail, id, clickedDetail }) {
   return (
     <div
       style={{
@@ -9,18 +9,22 @@ function Files({ data, showDetail,setshowDetail,id ,clickedDetail }) {
         borderRadius: "0.1rem",
         cursor: "pointer",
         marginBottom: "0.8rem",
-        marginRight: "1rem"
+        marginRight: "1rem",
       }}
       onClick={() => {
-        if(data.id===id){
-          setshowDetail(showDetail ?false:true)
-          return clickedDetail(null)
+        if (data.id === id) {
+          setshowDetail(showDetail ? false : true);
+          if(showDetail===true){
+            return clickedDetail(null);
+          }
+          return clickedDetail({ filename: data.path, filedetail: data });
         }
-        setshowDetail(true)
-       return clickedDetail({
-            filename: data.path,
-            filedetail: data,
-       })
+       
+        setshowDetail(true);
+        return clickedDetail({
+          filename: data.path,
+          filedetail: data,
+        });
       }}
     >
       <p>{data.name}</p>

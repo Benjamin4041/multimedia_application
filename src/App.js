@@ -1,5 +1,5 @@
 // import './App.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Buttons from "./components/buttons";
 import Files from "./components/files";
 import Header from "./components/header";
